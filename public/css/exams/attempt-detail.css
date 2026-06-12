@@ -1,0 +1,20 @@
+.type-pill {
+    display:inline-block;
+    border-radius:20px;
+    padding:1px 8px;
+    font-size:.65rem;
+    font-weight:700;
+    border:1px solid;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+}
+.grade-input::-webkit-outer-spin-button,
+.grade-input::-webkit-inner-spin-button { opacity: 1; }
+.exam-prose { line-height: 1.65; overflow-wrap: break-word; word-break: break-word; }
+.exam-prose h1,.exam-prose h2,.exam-prose h3 { font-weight: 700; margin-top: .4rem; margin-bottom: .15rem; }
+.exam-prose h1 { font-size: 1.05rem; }
+.exam-prose h2 { font-size: .95rem; }
+.exam-prose h3 { font-size: .88rem; }
+.exam-prose p  { margin-bottom: .35rem; }
+.exam-prose ul,.exam-prose ol { padding-left: 1.4rem; margin-bottom: .35rem; }
+.exam-prose blockquote { border-left: 3px solid #A5B4FC; padding-left: .6rem; color: #475569; margin: .3rem 0; }
