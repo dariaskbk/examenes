@@ -75,6 +75,41 @@ class ExamAttempt extends Model
         return $closed;
     }
 
+    /**
+     * Close every abandoned in-progress attempt across all exams.
+     * Designed to run from a scheduled task (every ~5 min).
+     *
+     * Pre-filters at SQL using the join to exams + access_codes so we only
+     * load attempts whose deadline (started_at + duration + extra_minutes) is
+     * already in the past — avoids scanning every active attempt.
+     */
+    public static function closeTimedOutForAll(): int
+    {
+        $expiredIds = self::query()
+            ->join('exams', 'exams.id', '=', 'exam_attempts.exam_id')
+            ->join('exam_access_codes', 'exam_access_codes.id', '=', 'exam_attempts.access_code_id')
+            ->where('exam_attempts.status', 'in_progress')
+            ->whereNotNull('exam_attempts.started_at')
+            // Laravel persists timestamps in UTC. MySQL's NOW() returns the
+            // session timezone which on this server is SYSTEM (local time).
+            // Use UTC_TIMESTAMP() to compare apples to apples.
+            ->whereRaw(
+                'DATE_ADD(exam_attempts.started_at, INTERVAL (exams.duration_minutes + COALESCE(exam_access_codes.extra_minutes, 0)) MINUTE) < UTC_TIMESTAMP()'
+            )
+            ->pluck('exam_attempts.id');
+
+        if ($expiredIds->isEmpty()) {
+            return 0;
+        }
+
+        $closed = 0;
+        foreach (self::whereIn('id', $expiredIds)->cursor() as $a) {
+            $a->gradeAndSubmit(true);
+            $closed++;
+        }
+        return $closed;
+    }
+
     public function isTimedOut(): bool
     {
         if (!$this->started_at || $this->status !== 'in_progress') {
