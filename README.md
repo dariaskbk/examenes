@@ -2,8 +2,6 @@
   <img src="public/images/sicore-logo.png" alt="SICORE" width="320">
 </p>
 
-<h1 align="center">ExamCore</h1>
-
 <p align="center">
   <strong>Módulo de Exámenes en línea de SICORE</strong><br>
   Plataforma para crear, aplicar y calificar evaluaciones digitales con sincronización automática de notas al sistema académico.
@@ -19,9 +17,9 @@
 
 ---
 
-## 🎯 Qué es ExamCore
+## 🎯 Qué es el modulo de exámenes?
 
-ExamCore es una extensión del sistema académico **SICORE** que cubre todo el ciclo de evaluación digital:
+Es una extensión del sistema académico **SICORE** que cubre todo el ciclo de evaluación digital:
 
 - 🏗️ **Creación de exámenes** con 11 tipos de pregunta (selección única / múltiple, V/F, emparejamiento, ordenamiento, identificación, completar, respuesta corta, restringida, ejercicio, producción escrita).
 - 📥 **Importación masiva** desde Excel o ZIP (Excel + multimedia).
